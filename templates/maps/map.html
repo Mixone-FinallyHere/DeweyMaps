@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{% load leaflet_tags %}
+
+<head>
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    map_name = "{{map.name}}";
+
+    function map_init (map, options) {
+      $.ajax({
+        url: "/maps/markers/" + map_name
+      }).done(function(ret) {
+        for (var i in ret.markers) {
+            marker = ret.markers[i];
+            L.geoJson(marker.position).addTo(map);
+        }
+        map.fitBounds(L.latLngBounds());
+      });
+    }
+</script>
+
+</head>
+
+<body>
+{{map.name}}
+
+{% leaflet_map "frame" callback="window.map_init" %}
+
+<ul>
+{% for marker in map.marker_set.all %}
+  <li>{{marker.name}}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
