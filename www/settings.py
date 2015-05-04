@@ -41,6 +41,7 @@ INSTALLED_APPS = (
 
     'leaflet',
     'taggit',
+    'rest_framework',
 
     'maps',
 )
@@ -112,4 +113,10 @@ LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (50.84, 4.36),
     'DEFAULT_ZOOM': 12,
     'SCALE': 'metric',
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
 }

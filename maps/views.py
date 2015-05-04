@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from rest_framework import viewsets
+from maps.serializers import MapSerializer, MarkerSerializer
 
 from maps.models import Map, Marker
 
 
-def view_map(request, mp_name):
-    mp = get_object_or_404(Map, name=mp_name)
+def view_map(request, mp_id):
+    mp = get_object_or_404(Map, id=mp_id)
 
-    markers_tags = map(lambda x: set(x.tags.all()), mp.marker_set.all())
+    markers_tags = map(lambda x: set(x.tags.all()), mp.markers.all())
     tags = set()
     for marker_tags in markers_tags:
         tags.update(marker_tags)
@@ -17,17 +18,14 @@ def view_map(request, mp_name):
         'tags': tags,
     }
 
-    return render(request, 'maps/map.html', context)
+    return render(request, 'maps/embed.html', context)
 
 
-def map_markers(request, mp_name, tag=None):
-    print(mp_name)
-    mp = get_object_or_404(Map, name=mp_name)
-    markers = Marker.objects.filter(map=mp)
-    if tag is not None:
-        markers = markers.filter(tags__slug=tag)
-    context = {
-        'markers': list(map(lambda x: x.jsonable(), markers))
-    }
+class MapViewSet(viewsets.ModelViewSet):
+    queryset = Map.objects.all()
+    serializer_class = MapSerializer
 
-    return JsonResponse(context)
+
+class MarkerViewSet(viewsets.ModelViewSet):
+    queryset = Marker.objects.all()
+    serializer_class = MarkerSerializer

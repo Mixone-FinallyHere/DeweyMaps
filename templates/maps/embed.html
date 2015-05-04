@@ -9,17 +9,16 @@
 
 
 <script type="text/javascript">
-    map_name = "{{map.name}}";
+    map_id = "{{map.id}}";
 
     function map_init (map, options) {
       $.ajax({
-        url: "/maps/markers/" + map_name
+        url: "/api/maps/" + map_id
       }).done(function(ret) {
         for (var i in ret.markers) {
             marker = ret.markers[i];
-            L.geoJson(marker.position).addTo(map);
+            L.marker([marker.lat, marker.lon]).addTo(map);
         }
-        map.fitBounds(L.latLngBounds());
       });
     }
 </script>

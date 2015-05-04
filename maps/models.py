@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.gis.db import models
 from taggit.managers import TaggableManager
 
@@ -16,7 +14,7 @@ class Marker(models.Model):
     name = models.CharField(blank=False, max_length=255)
     position = models.PointField(geography=True, blank=False)
     comment = models.TextField(blank=True, null=False, default="")
-    mp = models.ForeignKey(Map, name="map")
+    mp = models.ForeignKey(Map, name="map", related_name="markers")
 
     objects = models.GeoManager()
     tags = TaggableManager()
@@ -28,10 +26,14 @@ class Marker(models.Model):
     def content(self):
         return self.comment
 
-    def jsonable(self):
-        return {
-            'name': self.name,
-            'position': json.loads(self.position.json),
-            'comment': self.comment,
-            'tags': list(map(lambda x: {'name': x.name, 'slug': x.slug}, self.tags.all()))
-        }
+    @property
+    def tags_tuple(self):
+        return [(tag.slug, tag.name) for tag in self.tags.all()]
+
+    @property
+    def lat(self):
+        return self.position.y
+
+    @property
+    def lon(self):
+        return self.position.x
