@@ -109,11 +109,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+TOKEN = "pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q"
+
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (50.84, 4.36),
     'DEFAULT_ZOOM': 12,
     'SCALE': 'metric',
+    'ATTRIBUTION_PREFIX': """
+    <a href="http://dewey.be/">Dewey.be</a> |
+    <a href="http://www.openstreetmap.org/about/">OpenStreetMap</a> """,
+    'RESET_VIEW': False,
+    'TILES': 'https://a.tiles.mapbox.com/v4/c4ptaincrunch.ka5engdh/{z}/{x}/{y}.png?access_token=' + TOKEN
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
