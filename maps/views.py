@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
 from maps.serializers import MapSerializer, MarkerSerializer
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 from maps.models import Map, Marker
 
 
+@xframe_options_exempt
 def view_map(request, mp_id):
     mp = get_object_or_404(Map, id=mp_id)
 
