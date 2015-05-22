@@ -40,10 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     'leaflet',
-    'taggit',
     'rest_framework',
 
     'maps',
+    'closet',
 )
 
 MIDDLEWARE_CLASSES = (
