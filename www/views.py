@@ -7,3 +7,7 @@ def demo(request, mp_id=1):
     mp = get_object_or_404(Map, id=mp_id)
 
     return render(request, 'www/demo.html', {'map': mp})
+
+
+def index(request):
+    return render(request, 'www/index.html')

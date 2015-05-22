@@ -10,6 +10,7 @@ router.register(r'maps', views.MapViewSet)
 router.register(r'markers', views.MarkerViewSet)
 
 urlpatterns = [
+    url(r'^$', 'www.views.index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^demo', 'www.views.demo'),
     url(r'^demo/(?P<mp_id>[\w-]+)', 'www.views.demo'),

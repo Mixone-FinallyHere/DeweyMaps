@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation 5</title>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Special+Elite" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <style type="text/css">
+.top-bar .name h1 a{
+  font-family: Special Elite;
+  font-weight: 500;
+  padding-top: 0.1em;
+}
+
+.top-bar .name h1 a .fi{
+  font-size: 1.5em;
+  vertical-align: bottom;
+}
+
+.menubar {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-right: 10px solid #efefef;
+  left: 0;
+  top: 2.8em;
+  bottom: 0;
+  position: fixed;
+}
+
+#map {
+  right: 0;
+  top: 4em;
+  bottom: 0;
+  padding: 10px;
+  position: fixed;
+}
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
+
+
+</head>
+<body>
+
+<nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="/"><i class='fi fi-map'></i> Dewey Maps</a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <ul class="right">
+      <li class="active"><a href="#">
+        <i class="fa fa-recycle"></i> Récuperer
+      </a></li>
+      <li ><a href="#">
+        <i class="fa fa-check"></i> Se former, créer
+      </a></li>
+      <li ><a href="#">
+        <i class="fa fa-cloud"></i> Aider s'entraider
+      </a></li>
+      <li ><a href="#">
+        <i class="fa fa-bullhorn"></i> Sortir, bouger
+      </a></li>
+    </ul>
+  </section>
+</nav>
+
+
+</div>
+<div class="small-12 medium-8 large-9 columns maprow"  id="map"></div>
+
+
+
+<div id="addPointModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Ajoutez un point sur la carte.</h2>
+  <p class="lead">Contribuez aux cartes Dewey simplement !</p>
+  <form>
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Nom
+          <input type="text" placeholder="Nom" />
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-6 columns">
+        <label>Site Web
+          <input type="text" placeholder="http://" />
+        </label>
+      </div>
+      <div class="large-6 columns">
+        <label>Téléphone
+          <input type="text" placeholder="Téléphone" />
+        </label>
+      </div>
+    </div>
+    <div class="large-3 columns">
+        <label>Latitude
+          <input type="text" value="" disabled name="lat" />
+        </label>
+      </div>
+      <div class="large-3 columns">
+        <label>Longitude
+          <input type="text" value="" disabled name="lon" />
+        </label>
+      </div>
+    <div class="row">
+      <div class="large-6 columns">
+        <label>Catégorie
+          <select>
+            <option value="husker">Récupérer</option>
+            <option value="starbuck">Se former, créer</option>
+            <option value="hotdog">Aider, s'entraider</option>
+            <option value="apollo">Sortir bouger</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-6 columns">
+        <label>Description
+          <textarea rows="4" placeholder="Décrivez brièvement le point..."></textarea>
+        </label>
+      </div>
+      <div class="large-6 columns">
+        <label>Sous-catégories</label>
+        <input id="checkbox1" type="checkbox"><label for="checkbox1">Catégorie</label>
+        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label>
+        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label><br>
+        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-6 columns"><br>
+        <em style="color: grey;">Les modifications n'apparaitront pas immédiatement</em>
+      </div>
+      <div class="large-6 columns text-right">
+        <input class="button success" type="submit" value="Suggégrez votre point">
+      </div>
+    </div>
+  </form>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script>
+    $(document).foundation();
+    var map = L.map('map').setView([50.83906, 4.35308], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'c4ptaincrunch.ka5engdh',
+        accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
+    }).addTo(map);
+
+    function onMapClick(e) {
+      $('#addPointModal').foundation('reveal', 'open');
+      $('input[name=lat]').val(e.latlng.lat);
+      $('input[name=lon]').val(e.latlng.lng);
+    }
+    map.on('click', onMapClick);
+
+  var map_id = 1;
+  var leaf_markers = [];
+  $.ajax({
+      url: "/api/maps/" + map_id
+  }).done(function(ret) {
+      for (var i = 0; i < ret.markers.length; i++) {
+          var marker = ret.markers[i];
+          leaf_markers[i] = L.marker([marker.lat, marker.lon])
+          .bindPopup(marker.comment)
+          .on("click", function(e) {
+              map.panTo(e.latlng);
+          })
+          .addTo(map);
+
+          // var l = $("<li>" + marker.name +"</li>")
+          // .attr("lat", marker.lat)
+          // .attr("marker-id", i)
+          // .attr("lon", marker.lon)
+          // .click(function(e){
+          //     var target = $(e.currentTarget);
+          //     map.panTo([
+          //         target.attr("lat"),
+          //         target.attr("lon")
+          //     ]);
+          //     leaf_markers[target.attr("marker-id")].openPopup();
+          // })
+
+          // $('#scroll ul').append(l);
+      }
+  });
+
+  </script>
+</body>
+</html>
