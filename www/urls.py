@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework import routers
+from www import settings
 
 from maps import views
 
@@ -15,3 +16,7 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^embed/', include('maps.urls')),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
