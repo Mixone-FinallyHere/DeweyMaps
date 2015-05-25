@@ -7,8 +7,12 @@ class Marker(models.Model):
     name = models.CharField(blank=False, max_length=255)
     position = models.PointField(geography=True, blank=False)
     comment = models.TextField(blank=True, null=False, default="")
-    json_data = models.TextField(blank=True, null=False, default="{}")
     subcategories = models.ManyToManyField(Subcategory)
+    web = models.URLField(default="")
+    phone = models.CharField(max_length=15, default="")
+    adress = models.CharField(max_length=1000, default="")
+    public = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     objects = models.GeoManager()
 
@@ -26,3 +30,7 @@ class Marker(models.Model):
     @property
     def lon(self):
         return self.position.x
+
+    @property
+    def popup(self):
+        return self.comment

@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from rest_framework import viewsets
 
-# Create your views here.
+from closet.models import Category, Subcategory
+from closet.serializers import SubcategorySerializer, CategorySerializer
+
+
+class SubcategoryViewSet(viewsets.ModelViewSet):
+    queryset = Subcategory.objects.all()
+    serializer_class = SubcategorySerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

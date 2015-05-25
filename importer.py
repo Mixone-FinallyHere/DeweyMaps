@@ -1,16 +1,27 @@
-from maps.models import Map, Marker
+from maps.models import Marker
 from django.contrib.gis.geos import Point
+import csv
+import json
 
-mp = Map.objects.get(id=id)
 
 mapping = {
-    'name': "Nom",
-    'lat': "Latitude",
-    'lon': "Longitude",
-    'comment': "Description"
+    'name': "NOM",
+    'lat': "LAT",
+    'lon': "LONG",
+    'comment': "DESCRIPTION",
+    'rue': 'RUE',
+    'code': 'CODE',
+    'commune': 'COMMUNE',
 }
 
-f = open('/home/nikita/Carte_assocs_fini.csv', 'r')
+template = """
+<h5>{name}</h5>
+<p>{comment}</p>
+
+<em>Adresse : {rue}, {code} {commune}</em>
+"""
+
+f = open('/home/nikita/Desktop/dewey.csv', 'r')
 reader = csv.reader(f, delimiter=",")
 lines = list(reader)
 
@@ -29,5 +40,12 @@ for line in lines:
         points.append(point)
 
 for point in points:
-    pos = Point(float(point['lon']), float(point['lat']))
-    mp.markers.create(name=point['name'], comment=point['comment'], position=pos)
+    lat = point['lat']
+    if lat[-4] == '.':
+        lat = lat[:-4] + lat[-3:]
+    lon = point['lon']
+    if lon[-4] == '.':
+        lon = lon[:-4] + lat[-3:]
+    pos = Point(float(lon), float(lat))
+    comment = template.format(**point)
+    Marker.objects.create(name=point['name'], comment=comment, position=pos, json_data=json.dumps(point))

@@ -27,14 +27,24 @@
   vertical-align: bottom;
 }
 
-.menubar {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-right: 10px solid #efefef;
+#menubar {
   left: 0;
   top: 2.8em;
   bottom: 0;
   position: fixed;
 }
+
+#menubar #errorsuggest {
+  bottom: 0;
+  position: fixed;
+  background-color: #222;
+  color: #eee;
+  width: 100%;
+  margin-left: -1em;
+  padding: 0.7em;
+  cursor: pointer;
+}
+
 
 #map {
   right: 0;
@@ -44,10 +54,7 @@
   position: fixed;
 }
   </style>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
-
-
 </head>
 <body>
 
@@ -62,48 +69,60 @@
 
   <section class="top-bar-section">
     <ul class="right">
-      <li class="active"><a href="#">
-        <i class="fa fa-recycle"></i> Récuperer
-      </a></li>
-      <li ><a href="#">
-        <i class="fa fa-check"></i> Se former, créer
-      </a></li>
-      <li ><a href="#">
-        <i class="fa fa-cloud"></i> Aider s'entraider
-      </a></li>
-      <li ><a href="#">
-        <i class="fa fa-bullhorn"></i> Sortir, bouger
-      </a></li>
+      {% for category in categories %}
+        <li><a href="#">
+          <i class="fa fa-recycle"></i> {{ category.name }}
+        </a></li>
+      {% endfor %}
     </ul>
   </section>
 </nav>
 
 
+<div class="small-12 medium-4 large-3 columns"  id="menubar">
+  <div id="errorsuggest">
+    <i class="fi fi-plus"> </i>
+    Suggérez un point
+  </div>
+
 </div>
-<div class="small-12 medium-8 large-9 columns maprow"  id="map"></div>
 
 
+<div class="small-12 medium-8 large-9 columns maprow"  id="map">
+</div>
+
+<div id="pointhelpModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Ajoutez un point sur la carte.</h2>
+  <p>Pour ajouter un point, cliquez simplement sur la carte à l'endroit ou vous désirez ajouter le point.</p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
 
 <div id="addPointModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
   <h2 id="modalTitle">Ajoutez un point sur la carte.</h2>
-  <p class="lead">Contribuez aux cartes Dewey simplement !</p>
-  <form>
+  <form id="addpoint">
     <div class="row">
       <div class="large-12 columns">
         <label>Nom
-          <input type="text" placeholder="Nom" />
+          <input type="text" placeholder="Nom" name="name"/>
         </label>
       </div>
     </div>
     <div class="row">
       <div class="large-6 columns">
         <label>Site Web
-          <input type="text" placeholder="http://" />
+          <input type="text" placeholder="http:// (Facultatif)" name="web" />
         </label>
       </div>
       <div class="large-6 columns">
         <label>Téléphone
-          <input type="text" placeholder="Téléphone" />
+          <input type="text" placeholder="Téléphone (Facultatif)" name="phone"/>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Adresse
+          <input type="text" placeholder="Adresse (Facultatif)" name="adress" />
         </label>
       </div>
     </div>
@@ -120,11 +139,10 @@
     <div class="row">
       <div class="large-6 columns">
         <label>Catégorie
-          <select>
-            <option value="husker">Récupérer</option>
-            <option value="starbuck">Se former, créer</option>
-            <option value="hotdog">Aider, s'entraider</option>
-            <option value="apollo">Sortir bouger</option>
+          <select name="category">
+            {% for category in categories %}
+              <option value="{{category.id}}">{{category.name}}</option>
+            {% endfor %}
           </select>
         </label>
       </div>
@@ -132,15 +150,25 @@
     <div class="row">
       <div class="large-6 columns">
         <label>Description
-          <textarea rows="4" placeholder="Décrivez brièvement le point..."></textarea>
+          <textarea rows="4" name="description" placeholder="Décrivez brièvement le point... (Facultatif)"></textarea>
         </label>
       </div>
       <div class="large-6 columns">
         <label>Sous-catégories</label>
-        <input id="checkbox1" type="checkbox"><label for="checkbox1">Catégorie</label>
-        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label>
-        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label><br>
-        <input id="checkbox2" type="checkbox"><label for="checkbox2">Catégorie</label>
+        <div id="subcatcheck">
+          {% for subcategory in subcategories %}
+            <input
+              id="checkbox{{ subcategory.id }}"
+              type="checkbox"
+              data-cat="{{ subcategory.id }}"
+              value="{{ subcategory.id }}"
+              name="subcategory[]"
+            >
+            <label for="checkbox{{ subcategory.id }}" data-cat="{{ subcategory.id }}">
+              {{ subcategory.name }}
+            </label>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div class="row">
@@ -161,50 +189,76 @@
   <script>
     $(document).foundation();
     var map = L.map('map').setView([50.83906, 4.35308], 13);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'c4ptaincrunch.ka5engdh',
-        accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
-    }).addTo(map);
+    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    //     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    //     maxZoom: 18,
+    //     id: 'c4ptaincrunch.ka5engdh',
+    //     accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
+    // }).addTo(map);
 
-    function onMapClick(e) {
-      $('#addPointModal').foundation('reveal', 'open');
-      $('input[name=lat]').val(e.latlng.lat);
-      $('input[name=lon]').val(e.latlng.lng);
-    }
-    map.on('click', onMapClick);
 
-  var map_id = 1;
-  var leaf_markers = [];
-  $.ajax({
-      url: "/api/maps/" + map_id
-  }).done(function(ret) {
-      for (var i = 0; i < ret.markers.length; i++) {
-          var marker = ret.markers[i];
-          leaf_markers[i] = L.marker([marker.lat, marker.lon])
-          .bindPopup(marker.comment)
-          .on("click", function(e) {
-              map.panTo(e.latlng);
-          })
-          .addTo(map);
+    $('#subcatcheck input').hide()
+    $('#subcatcheck label').hide()
 
-          // var l = $("<li>" + marker.name +"</li>")
-          // .attr("lat", marker.lat)
-          // .attr("marker-id", i)
-          // .attr("lon", marker.lon)
-          // .click(function(e){
-          //     var target = $(e.currentTarget);
-          //     map.panTo([
-          //         target.attr("lat"),
-          //         target.attr("lon")
-          //     ]);
-          //     leaf_markers[target.attr("marker-id")].openPopup();
-          // })
+    $('select[name=category]').change(function() {
+      cat_id = $('select[name=category] > option:selected').val();
+      $('#subcatcheck input').hide()
+      $('#subcatcheck label').hide()
+      $('#subcatcheck input[data-cat=' + cat_id + ']').show()
+      $('#subcatcheck label[data-cat=' + cat_id + ']').show()
+    })
 
-          // $('#scroll ul').append(l);
-      }
-  });
+    $('#errorsuggest').click(function() {
+        $('#pointhelpModal').foundation('reveal', 'open');
+
+        map.once('click', function(e) {
+          $('#addPointModal').foundation('reveal', 'open');
+          $('input[name=lat]').val(e.latlng.lat);
+          $('input[name=lon]').val(e.latlng.lng);
+        });
+    })
+
+    $('#addpoint').submit(function() {
+      $.ajax(
+        {
+          url: "/addmarker",
+          type: "POST",
+          data: {
+            name: $("#addpoint input[name='name']").val(),
+            web: $("#addpoint input[name='web']").val(),
+            phone: $("#addpoint input[name='phone']").val(),
+            adress: $("#addpoint input[name='adress']").val(),
+            lat: $("#addpoint input[name='lat']").val(),
+            lon: $("#addpoint input[name='lon']").val(),
+            description: $("#addpoint textarea[name='description']").val(),
+            subcat: $.map($(':checkbox[name=subcategory\\[\\]]:checked'), function(n, i){
+                          return n.value;
+                    }).join(',')
+          }
+        }
+      ).done(function(response){
+        $('#addPointModal').foundation('reveal', 'close');
+        alert("Votre point a été ajouté !");
+      }).fail(function(r) {
+        alert("Le formulaire n'est pas bien rempli");
+      });
+      return false;
+    })
+
+
+    $.ajax({
+        url: "/api/markers"
+    }).done(function(response) {
+        for (var i = 0; i < response.length; i++) {
+            var marker = response[i];
+            L.marker([marker.lat, marker.lon])
+            .bindPopup(marker.comment)
+            .on("click", function(e) {
+                map.panTo(e.latlng);
+            })
+            .addTo(map);
+        }
+    });
 
   </script>
 </body>
