@@ -21,7 +21,7 @@ def validate_subcat(input):
 
 
 class MarkerViewSet(viewsets.ModelViewSet):
-    queryset = Marker.objects.filter(public=True)
+    queryset = Marker.objects.prefetch_related('subcategories').filter(public=True)
     serializer_class = MarkerSerializer
 
 

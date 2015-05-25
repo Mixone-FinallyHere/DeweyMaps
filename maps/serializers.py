@@ -9,7 +9,7 @@ class MarkerSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_subcategories(self, obj):
         if obj:
-            return [x.name for x in obj.subcategories.all()]
+            return [(x.id, x.name) for x in obj.subcategories.all()]
 
     class Meta:
         model = Marker

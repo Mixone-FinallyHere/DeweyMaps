@@ -3,10 +3,12 @@ from django.contrib import admin
 from rest_framework import routers
 from www import settings
 
-from maps import views
+import maps.views
+import closet.views
 
 router = routers.DefaultRouter()
-router.register(r'markers', views.MarkerViewSet)
+router.register(r'markers', maps.views.MarkerViewSet)
+router.register(r'categories', closet.views.CategoryViewSet)
 
 urlpatterns = [
     url(r'^$', 'www.views.index'),
