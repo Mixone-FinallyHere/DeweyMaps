@@ -63,7 +63,6 @@ def add_marker(request):
 
             return HttpResponse(m.id)
         else:
-            import ipdb; ipdb.set_trace()
             return HttpResponseBadRequest('Invalid form')
 
     return HttpResponseBadRequest('POST ONLY')

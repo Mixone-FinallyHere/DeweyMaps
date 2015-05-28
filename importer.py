@@ -1,8 +1,7 @@
 from maps.models import Marker
+from closet.models import Subcategory
 from django.contrib.gis.geos import Point
 import csv
-import json
-
 
 mapping = {
     'name': "NOM",
@@ -12,16 +11,13 @@ mapping = {
     'rue': 'RUE',
     'code': 'CODE',
     'commune': 'COMMUNE',
+    'web': 'WEBSITE',
+    'phone': 'TEL',
+    'category': 'CATEGORIE',
 }
 
-template = """
-<h5>{name}</h5>
-<p>{comment}</p>
 
-<em>Adresse : {rue}, {code} {commune}</em>
-"""
-
-f = open('/home/nikita/Desktop/dewey.csv', 'r')
+f = open("/home/nikita/Downloads/CARTE DEWEY & REPAIR TOGETHER - 1 - RECUP' - HABI-ENER.csv", 'r')
 reader = csv.reader(f, delimiter=",")
 lines = list(reader)
 
@@ -47,5 +43,17 @@ for point in points:
     if lon[-4] == '.':
         lon = lon[:-4] + lat[-3:]
     pos = Point(float(lon), float(lat))
-    comment = template.format(**point)
-    Marker.objects.create(name=point['name'], comment=comment, position=pos)
+    m = Marker.objects.create(
+        name=point['name'],
+        position=pos,
+        comment=point['comment'],
+        web=point['web'],
+        phone=point['phone'],
+        adress="{0[rue]} {0[code]} {0[commune]}".format(point),
+    )
+
+    for cat in point['category'].split(','):
+        subcat, created = Subcategory.objects.get_or_create(name=cat.strip().capitalize())
+        m.subcategories.add(subcat)
+
+    m.save()
