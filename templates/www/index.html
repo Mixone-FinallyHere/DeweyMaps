@@ -224,7 +224,7 @@
       for (var i = 0; i < category.subcategories.length; i++) {
         subcat = category.subcategories[i];
         $('#subcatvav').append(
-          '<span data-selected="0" data-id="'
+          '<span data-id="'
            + subcat.id
            + '" class="subcat">'
            + subcat.name
@@ -232,14 +232,13 @@
         )
 
         $('.subcat[data-id="' + subcat.id + '"]').click(function() {
-          var state = $(this).attr("data-selected");
-          if (state == '0'){
-            shown_subcat.push($(this).attr('data-id'));
-            $(this).attr("data-selected", '1');
-          }
-          else {
+          if(shown_subcat.indexOf("" + subcat.id) >= 0){
             remove(shown_subcat, $(this).attr('data-id'));
             $(this).attr("data-selected", '0');
+          }
+          else {
+            shown_subcat.push($(this).attr('data-id'));
+            $(this).attr("data-selected", '1');
           }
           update_points();
         });
@@ -262,7 +261,6 @@
                 }
               }
             }
-            console.log(ok);
             if(ok == true){
               console.log("Adding " + marker.name);
               L.marker([marker.lat, marker.lon])
