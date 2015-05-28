@@ -70,7 +70,7 @@
   <section class="top-bar-section">
     <ul class="right">
       {% for category in categories %}
-        <li><a href="#">
+        <li><a href="#" data-id="{{ category.id }}" class="category" style="background-color: #{{category.color}}">
           <i class="fa fa-recycle"></i> {{ category.name }}
         </a></li>
       {% endfor %}
@@ -80,6 +80,9 @@
 
 
 <div class="small-12 medium-4 large-3 columns"  id="menubar">
+  <div id="subcatvav">
+
+  </div>
   <div id="errorsuggest">
     <i class="fi fi-plus"> </i>
     Suggérez un point
@@ -189,12 +192,105 @@
   <script>
     $(document).foundation();
     var map = L.map('map').setView([50.83906, 4.35308], 13);
-    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    //     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'c4ptaincrunch.ka5engdh',
-    //     accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
-    // }).addTo(map);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'c4ptaincrunch.ka5engdh',
+        accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
+    }).addTo(map);
+
+  function remove(arr, item) {
+      for(var i = arr.length; i--;) {
+          if(arr[i] === item) {
+              arr.splice(i, 1);
+          }
+      }
+  }
+
+    var json_markers = [];
+    var markers_group = new L.FeatureGroup();
+    var shown_subcat = [];
+    map.addLayer(markers_group);
+
+    $.ajax({
+        url: "/api/markers"
+    }).done(function(response) {
+        json_markers = response;
+    });
+
+    var show_cat = function(cat_id) {
+      $('#subcatvav').empty();
+      var category = categories[cat_id];
+      for (var i = 0; i < category.subcategories.length; i++) {
+        subcat = category.subcategories[i];
+        $('#subcatvav').append(
+          '<span data-selected="0" data-id="'
+           + subcat.id
+           + '" class="subcat">'
+           + subcat.name
+           + '</span>'
+        )
+
+        $('.subcat[data-id="' + subcat.id + '"]').click(function() {
+          var state = $(this).attr("data-selected");
+          if (state == '0'){
+            shown_subcat.push($(this).attr('data-id'));
+            $(this).attr("data-selected", '1');
+          }
+          else {
+            remove(shown_subcat, $(this).attr('data-id'));
+            $(this).attr("data-selected", '0');
+          }
+          update_points();
+        });
+      }
+    }
+
+    var update_points = function() {
+        console.log("Updating points. Shown : [" + shown_subcat + "]");
+        map.removeLayer(markers_group);
+        markers_group = new L.FeatureGroup();
+        map.addLayer(markers_group);
+        for (var i = 0; i < json_markers.length; i++) {
+            marker = json_markers[i];
+
+            var ok = false;
+            for (var j = 0; j < marker.subcategories.length; j++) {
+              for (var k = 0; k < shown_subcat.length; k++) {
+                if (marker.subcategories[j].id == shown_subcat[k]){
+                  ok = true;
+                }
+              }
+            }
+            console.log(ok);
+            if(ok == true){
+              console.log("Adding " + marker.name);
+              L.marker([marker.lat, marker.lon])
+                .bindPopup(marker.comment)
+                .on("click", function(e) {
+                    map.panTo(e.latlng);
+                })
+                .addTo(markers_group);
+            }
+        }
+    }
+
+    var categories = {};
+
+    $.ajax({
+        url: "/api/categories"
+    }).done(function(response) {
+        for (var i = 0; i < response.length; i++) {
+            var cat = response[i];
+            categories[cat.id] = cat;
+            $('.category[data-id=' + cat.id + ']').click(function() {
+              show_cat($(this).attr('data-id'));
+              return false;
+            });
+        }
+        show_cat(1);
+    });
+
 
 
     $('#subcatcheck input').hide()
@@ -239,26 +335,12 @@
       ).done(function(response){
         $('#addPointModal').foundation('reveal', 'close');
         alert("Votre point a été ajouté !");
+        // TODO : reset form
       }).fail(function(r) {
         alert("Le formulaire n'est pas bien rempli");
       });
       return false;
     })
-
-
-    $.ajax({
-        url: "/api/markers"
-    }).done(function(response) {
-        for (var i = 0; i < response.length; i++) {
-            var marker = response[i];
-            L.marker([marker.lat, marker.lon])
-            .bindPopup(marker.comment)
-            .on("click", function(e) {
-                map.panTo(e.latlng);
-            })
-            .addTo(map);
-        }
-    });
 
   </script>
 </body>

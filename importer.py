@@ -48,4 +48,4 @@ for point in points:
         lon = lon[:-4] + lat[-3:]
     pos = Point(float(lon), float(lat))
     comment = template.format(**point)
-    Marker.objects.create(name=point['name'], comment=comment, position=pos, json_data=json.dumps(point))
+    Marker.objects.create(name=point['name'], comment=comment, position=pos)
