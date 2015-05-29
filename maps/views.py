@@ -147,7 +147,7 @@ def im(data, AAA):
             lon = lon[:-4] + lat[-3:]
         pos = Point(float(lon), float(lat))
         web = point['web']
-        if not web.startswith("http"):
+        if not web.startswith("http") and web != "":
             web = "http://" + web
         m = Marker.objects.create(
             name=point['name'],
