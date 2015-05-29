@@ -1,5 +1,16 @@
-<form action="/add/" method="post">
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+
+<form action="/add/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_table }}
     <input type="submit" value="Submit" />
 </form>
+
+</body>
+</html>
