@@ -33,4 +33,14 @@ class Marker(models.Model):
 
     @property
     def popup(self):
-        return self.comment
+        tpl = """<h5>{0.name}</h5>"""
+        if self.adress != "":
+            tpl += "<em>Adresse</em> : {0.adress}<br><br>"
+        if self.phone != "":
+            tpl += "<em>Téléphone</em> : {0.phone}<br><br>"
+        if self.web != "":
+            tpl += '<b><a href="{0.web}">Site web</a></b><br><br>'
+
+        tpl += "{0.comment}"
+
+        return tpl.format(self)

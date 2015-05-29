@@ -71,16 +71,28 @@
 .subcat:before {
   font-family: "foundation-icons";
   padding-right: 0.5em;
+  padding-left: 1em;
 }
 
 .subcat[show=""]:before {;
   content:"\f169";
+
 }
 
 
 .subcat[show=ok]:before {;
   content:"\f126";
+  padding-left: 2em;
 }
+
+#subcatvav {
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 70vh;
+}
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
 </head>
@@ -108,7 +120,7 @@
 
 
 <div class="small-12 medium-4 large-3 columns"  id="menubar">
-  Cliquez sur une catégorie pour en afficher les points sur la carte
+  <div style="text-align: center;">Cliquez sur une catégorie pour en afficher les points sur la carte</div>
   <div id="subcatvav">
 
   </div>
@@ -117,7 +129,7 @@
     Suggérez un point
   </div>
 
-  Dewey Maps est un service proposé par <a href="">Dewey</a>
+  <div style="padding-top: 1em;text-align: center;">Dewey Maps est un service proposé par <a href="">Dewey</a></div>
 
 </div>
 

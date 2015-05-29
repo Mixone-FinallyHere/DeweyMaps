@@ -12,6 +12,7 @@ router.register(r'categories', closet.views.CategoryViewSet)
 
 urlpatterns = [
     url(r'^$', 'www.views.index'),
+    url(r'^add/$', 'maps.views.importer'),
     url(r'^addmarker$', 'maps.views.add_marker'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
