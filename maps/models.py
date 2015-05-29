@@ -39,7 +39,7 @@ class Marker(models.Model):
         if self.phone != "":
             tpl += "<em>Téléphone</em> : {0.phone}<br><br>"
         if self.web != "":
-            tpl += '<b><a href="{0.web}">Site web</a></b><br><br>'
+            tpl += '<b><a target="_blank" href="{0.web}">Site web</a></b><br><br>'
 
         tpl += "{0.comment}"
 
