@@ -41,6 +41,8 @@ class Marker(models.Model):
         if self.web != "":
             tpl += '<b><a target="_blank" href="{0.web}">Site web</a></b><br><br>'
 
-        tpl += "{0.comment}"
+        tpl += "{0.comment}<br><br>"
+
+        tpl += '<a href="http://dewey.be/contact.html">Signaler un problème</a>'
 
         return tpl.format(self)
