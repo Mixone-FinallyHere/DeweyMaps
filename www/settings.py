@@ -75,6 +75,8 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = ['static']
+
 WSGI_APPLICATION = 'www.wsgi.application'
 
 
@@ -108,7 +110,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static2")
 
 TOKEN = "pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q"
 

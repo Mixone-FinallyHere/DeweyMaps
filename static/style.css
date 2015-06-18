@@ -1,0 +1,76 @@
+.top-bar .name h1 a{
+  font-family: Special Elite;
+  font-weight: 500;
+  padding-top: 0.1em;
+}
+
+.top-bar .name h1 a .fi{
+  font-size: 1.5em;
+  vertical-align: bottom;
+}
+
+#menubar {
+  left: 0;
+  top: 2.8em;
+  bottom: 0;
+  position: fixed;
+}
+
+#menubar #errorsuggest {
+  bottom: 0;
+  position: fixed;
+  background-color: #222;
+  color: #eee;
+  width: 100%;
+  margin-left: -1em;
+  padding: 0.7em;
+  cursor: pointer;
+}
+
+
+#map {
+  right: 0;
+  top: 4em;
+  bottom: 0;
+  padding: 10px;
+  position: fixed;
+}
+
+.subcat {
+  background-color: #ddd;
+  margin: 0;
+  margin-left: -1em;
+  width: 115%;
+  padding: 0.7em;
+  padding-left: 1em;
+  cursor: pointer;
+}
+
+.subcat[show=ok] {
+  color:#064D67;
+}
+
+.subcat:before {
+  font-family: "foundation-icons";
+  padding-right: 0.5em;
+  padding-left: 1em;
+}
+
+.subcat[show=""]:before {;
+  content:"\f169";
+
+}
+
+
+.subcat[show=ok]:before {;
+  content:"\f126";
+  padding-left: 2em;
+}
+
+#subcatvav {
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 70vh;
+}
