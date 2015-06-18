@@ -16,7 +16,7 @@
   position: fixed;
 }
 
-#menubar #errorsuggest {
+#menubar #bottombar {
   bottom: 0;
   position: fixed;
   background-color: #222;
@@ -25,6 +25,14 @@
   margin-left: -1em;
   padding: 0.7em;
   cursor: pointer;
+}
+
+#bottombar a {
+  color: white;
+}
+
+#bottombar a:hover {
+  text-decoration: underline;
 }
 
 
