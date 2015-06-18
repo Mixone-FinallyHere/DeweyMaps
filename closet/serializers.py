@@ -7,7 +7,7 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
     def get_subcategories(self, obj):
         if obj:
-            return [{'id': x.id, 'name': x.name} for x in obj.subcategory_set.all()]
+            return [{'id': x.id, 'name': x.name} for x in obj.subcategory_set.all().order_by('name')]
 
     class Meta:
         model = Category
