@@ -99,21 +99,23 @@
 <body>
 
 <nav class="top-bar" data-topbar role="navigation">
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="/"><i class='fi fi-map'></i> Dewey Maps</a></h1>
-    </li>
-     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-
   <section class="top-bar-section">
-    <ul class="right">
+    <ul>
       {% for category in categories %}
         <li><a href="#" data-id="{{ category.id }}" class="category" style="background-color: #{{category.color}}">
           {# <i class="fa fa-recycle"></i> #} {{ category.name }}
         </a></li>
       {% endfor %}
+    </ul>
+    <ul class="right">
+      <li class="name">
+        <h1>
+          <a href="/">
+            Bruxelles mode d’<sup>ré</sup>emploi : ressources outils et savoirs locaux
+            <i class='fi fi-map'></i>
+          </a>
+        </h1>
+      </li>
     </ul>
   </section>
 </nav>
