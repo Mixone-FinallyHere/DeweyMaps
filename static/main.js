@@ -1,4 +1,6 @@
     $(document).foundation();
+
+
     var map = L.map('map').setView([50.83906, 4.35308], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -69,6 +71,9 @@
         map.removeLayer(markers_group);
         markers_group = new L.FeatureGroup();
         map.addLayer(markers_group);
+
+        // var icon = L.MakiMarkers.icon({icon: "circle-stroked", color: "#b0b", size: "m"});
+
         for (var i = 0; i < json_markers.length; i++) {
             marker = json_markers[i];
 
@@ -76,6 +81,7 @@
             for (var j = 0; j < marker.subcategories.length; j++) {
               for (var k = 0; k < shown_subcat.length; k++) {
                 if (marker.subcategories[j].id == shown_subcat[k]){
+                  subcat_id = marker.subcategories[j].id;
                   ok = true;
                 }
               }
@@ -104,6 +110,10 @@
               show_cat($(this).attr('data-id'));
               return false;
             });
+            for (var j =  0; j < cat.subcategories.length; j++) {
+              console.log(cat.color);
+              cat.subcategories[j].color = cat.color;
+            };
         }
         show_cat(1);
     });
