@@ -115,7 +115,7 @@
               cat.subcategories[j].color = cat.color;
             };
         }
-        show_cat(1);
+        // show_cat(1);
     });
 
 
