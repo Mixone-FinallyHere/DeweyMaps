@@ -34,12 +34,12 @@ class MarkerViewSet(viewsets.ModelViewSet):
 
 class MarkerForm(forms.Form):
     name = forms.CharField(required=True)
-    web = forms.URLField()
-    phone = forms.CharField()
-    adress = forms.CharField()
+    web = forms.URLField(required=False)
+    phone = forms.CharField(required=False)
+    adress = forms.CharField(required=False)
     lat = forms.FloatField(required=True)
     lon = forms.FloatField(required=True)
-    description = forms.CharField()
+    description = forms.CharField(required=False)
     subcat = forms.CharField(validators=[validate_subcat])
 
 
