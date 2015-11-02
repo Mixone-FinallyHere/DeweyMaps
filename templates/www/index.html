@@ -135,6 +135,7 @@
         <label>Sous-catégories</label>
         <div id="subcatcheck">
           {% for subcategory in subcategories %}
+          <div class="item">
             <input
               id="checkbox{{ subcategory.id }}"
               type="checkbox"
@@ -145,6 +146,7 @@
             <label for="checkbox{{ subcategory.id }}" data-cat="{{ subcategory.category_id }}">
               {{ subcategory.name }}
             </label>
+          </div>
           {% endfor %}
         </div>
       </div>
