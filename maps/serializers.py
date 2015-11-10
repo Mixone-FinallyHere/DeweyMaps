@@ -13,4 +13,4 @@ class MarkerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Marker
-        fields = ('name', 'lat', 'lon', 'comment', 'subcategories', 'popup')
+        fields = ('name', 'lat', 'lon', 'subcategories', 'popup')
