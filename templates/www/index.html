@@ -213,6 +213,22 @@ $(document).foundation({
     }
 });
         </script>
+        <script>
+{% for category in categories %}
+{% for subcategory in category.subcategory_set.all %}
+$('.subcat[data-id="' + {{subcategory.id}} + '"]').click(function() {
+      var id = $(this).attr("data-id");
+      if(shown_subcat.indexOf("" + id) >= 0){
+        remove(shown_subcat, id);
+      }
+      else {
+        shown_subcat.push(id);
+      }
+      update_points();
+    });
+{% endfor %}
+{% endfor %}
+</script>
     </body>
 </html>
 
