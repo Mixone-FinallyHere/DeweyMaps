@@ -6,6 +6,31 @@ L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
   accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
 }).addTo(map);
 
+if(navigator.geolocation) {
+
+  // success
+  function displayPos(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    map.setView([lat,lon], 15);
+    var marker = L.marker([lat,lon]).addTo(map);
+    marker.bindPopup("Vous êtes ici");
+    var circle = L.circle([lat,lon], 50, {
+        fillOpacity: 0.5
+    }).addTo(map);
+
+  }
+
+  // error
+  function posError(error) {
+    //todo?
+  }
+
+  navigator.geolocation.getCurrentPosition(displayPos,posError);
+}
+
+
+
 var json_markers = [];
 var markers_group = new L.FeatureGroup();
 var shown_subcat = [];
