@@ -44,6 +44,7 @@ INSTALLED_APPS = (
 
     'maps',
     'closet',
+    'iframe',
 )
 
 MIDDLEWARE_CLASSES = (
