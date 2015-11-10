@@ -5,10 +5,12 @@ from www import settings
 
 import maps.views
 import closet.views
+import iframe.views
 
 router = routers.DefaultRouter()
 router.register(r'markers', maps.views.MarkerViewSet)
 router.register(r'categories', closet.views.CategoryViewSet)
+router.register(r'iframes', iframe.views.IframeViewSet)
 
 urlpatterns = [
     url(r'^$', 'www.views.index'),
@@ -16,6 +18,7 @@ urlpatterns = [
     url(r'^addmarker$', 'maps.views.add_marker'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
+    url(r'^frame/(?P<pk>\d+)', 'iframe.views.frame'),
 ]
 
 if settings.DEBUG:
