@@ -113,9 +113,10 @@ var submit_form = function() {
 
 
 var error_suggest = function() {
-  $('#pointhelpModal').foundation('reveal', 'open');
+  $('#errorsuggest-dropdown').removeClass("f-dropdown");
 
   map.once('click', function(e) {
+    $('#errorsuggest-dropdown').addClass("f-dropdown");
     $('#addPointModal').foundation('reveal', 'open');
     $('input[name=lat]').val(e.latlng.lat);
     $('input[name=lon]').val(e.latlng.lng);
