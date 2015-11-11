@@ -43,6 +43,6 @@ class Marker(models.Model):
 
         tpl += "{0.comment}<br><br>"
 
-        tpl += '<a href="http://dewey.be/contact.html">Signaler un problème</a>'
+        tpl += '<a href="http://dewey.be/contact.html" target="_blank">Signaler un problème</a>'
 
         return tpl.format(self)
