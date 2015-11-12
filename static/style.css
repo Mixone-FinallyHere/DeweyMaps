@@ -35,6 +35,13 @@
   text-decoration: underline;
 }
 
+.grey{
+    color: grey;
+}
+
+.no-margin {
+    margin:0px;
+}
 
 #map {
   right: 0;
