@@ -4,7 +4,7 @@ from iframe.models import Map
 
 
 class MapAdmin(LeafletGeoAdmin):
-    list_display = ('name', )
+    list_display = ('name', 'uuid')
     search_fields = ('name', )
 
 admin.site.register(Map, MapAdmin)

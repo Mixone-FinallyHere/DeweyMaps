@@ -3,3 +3,4 @@ psycopg2
 django-leaflet
 django-taggit
 djangorestframework
+django-uuidfield
