@@ -13,8 +13,8 @@ if(navigator.geolocation) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     map.setView([lat,lon], 15);
-    var marker = L.marker([lat,lon]).addTo(map);
-    marker.bindPopup("Vous êtes ici");
+    var icon = L.MakiMarkers.icon({color: "#0033ff", size: "l", icon: "building"});
+    L.marker([lat, lon], {icon: icon}).bindPopup("Vous êtes ici").addTo(map);
     var circle = L.circle([lat,lon], 50, {
         fillOpacity: 0.5
     }).addTo(map);
@@ -35,6 +35,7 @@ var json_markers = [];
 var markers_group = new L.FeatureGroup();
 var shown_subcat = [];
 var categories = {};
+var color_mapping = {};
 
 
 map.addLayer(markers_group);
@@ -55,19 +56,20 @@ $.ajax({
     $('.category[data-id=' + cat.id + ']').click(function() {
       show_cat($(this).attr('data-id'));
       return false;
-    });
+    })
     for (var j =  0; j < cat.subcategories.length; j++) {
       cat.subcategories[j].color = cat.color;
-    };
+      color_mapping[cat.subcategories[j].id] = cat.color;
+    }
   }
 });
 
 
-$('#subcatcheck input').hide()
-$('#subcatcheck label').hide()
-$('select[name=category]').change(update_selected_cat_form)
+$('#subcatcheck input').hide();
+$('#subcatcheck label').hide();
+$('select[name=category]').change(update_selected_cat_form);
 update_selected_cat_form();
 
-$('#errorsuggest').click(error_suggest)
+$('#errorsuggest').click(error_suggest);
 
-$('#addpoint').submit(submit_form)
+$('#addpoint').submit(submit_form);

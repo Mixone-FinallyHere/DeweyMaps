@@ -74,7 +74,8 @@ var update_points = function() {
     }
     if(ok == true){
       console.log("Adding " + marker.name);
-      L.marker([marker.lat, marker.lon])
+      var icon = L.MakiMarkers.icon({color: color_mapping[marker.subcategories[0].id], size: "l"});
+      L.marker([marker.lat, marker.lon], {icon: icon})
       .bindPopup(marker.popup)
       .on("click", function(e) {
         map.panTo(e.latlng);
