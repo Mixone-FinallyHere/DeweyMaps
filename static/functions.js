@@ -113,11 +113,9 @@ var submit_form = function() {
 
 
 var error_suggest = function() {
-  $('#errorsuggest-dropdown').removeClass("f-dropdown");
   $('.leaflet-container').css('cursor','crosshair');
 
   map.once('click', function(e) {
-    $('#errorsuggest-dropdown').addClass("f-dropdown");
     $('.leaflet-container').css('cursor','');
     $('#addPointModal').foundation('reveal', 'open');
     $('input[name=lat]').val(e.latlng.lat);
