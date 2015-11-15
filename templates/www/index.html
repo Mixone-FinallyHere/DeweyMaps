@@ -30,7 +30,7 @@
                         {% for category in categories %}
                         <li class="accordion-navigation">
                             <a href="#panel{{category.id}}" style="background-color: #{{category.color}}">{{category.name}}</a>
-                            <div id="panel{{category.id}}" class="content">
+                            <div id="panel{{category.id}}" class="content no-margin">
                                 <div id="subcatvav">
                                     {% for subcategory in category.subcategory_set.all %}
                                     <div class="subcat" data-id="{{subcategory.id}}" show="">
