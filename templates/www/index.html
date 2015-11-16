@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" >
@@ -13,11 +12,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css">
+        <link rel="stylesheet" href="http://cdn.jsdelivr.net/qtip2/2.2.1/jquery.qtip.css">        
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Special+Elite" />
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/style.css">
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
     </head>
     <body>
@@ -44,7 +43,7 @@
                     </ul>
                 </div>
                 <div id="">
-                    <a id="errorsuggest">
+                    <a href="#" title="Pour ajouter un point, cliquez simplement sur la carte à l'endroit où vous désirez ajouter le point." data-options="align:top" data-dropdown="errorsuggest-dropdown" id="errorsuggest">
                         <i class="fi fi-plus"> </i>
                         Suggérer un point
                     </a>
@@ -75,12 +74,6 @@
                 </section>
             </nav>
             <div class="columns maprow"  id="map">
-            </div>
-
-            <div id="pointhelpModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
-                <h2 id="modalTitle">Ajoutez un point sur la carte.</h2>
-                <p>Pour ajouter un point, cliquez simplement sur la carte à l'endroit où vous désirez ajouter le point.</p>
-                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
 
             <div id="addPointModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
@@ -174,7 +167,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <script src="http://cdn.jsdelivr.net/qtip2/2.2.1/jquery.qtip.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation/foundation.accordion.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation/foundation.dropdown.js"></script>
         <script src="/static/minimarker.js"></script>
         <script src='/static/tinycolor.js'></script>
 
@@ -218,14 +213,13 @@ $('.subcat').each(function(i){
         var id = $(this).attr("data-id");
         if(shown_subcat.indexOf("" + id) >= 0){
             remove(shown_subcat, id);
-          }
-          else {
+        }
+        else {
             shown_subcat.push(id);
-          }
-          update_points();
+        }
+        update_points();
     })
 })
-</script>
+        </script>
     </body>
 </html>
-

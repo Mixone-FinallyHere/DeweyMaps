@@ -29,7 +29,21 @@ if(navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(displayPos,posError);
 }
 
-
+$(document).ready(function () {
+  var tooltip = $('a[title]').qtip({
+    position:{
+        my: 'left bottom',
+        at: 'top right',
+        corner:{target:'leftMiddle',tooltip:'rightMiddle'}, //instead of corner:{target:'rightMiddle',tooltip:'leftMiddle'},
+        adjust:{screen:true, resize:true}
+      },
+      show: 'click',
+      hide: {
+        event: 'unfocus'
+    },
+});
+  var ttapi = tooltips.qtip('api');
+});
 
 var json_markers = [];
 var markers_group = new L.FeatureGroup();

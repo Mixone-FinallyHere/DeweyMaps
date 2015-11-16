@@ -114,9 +114,10 @@ var submit_form = function() {
 
 
 var error_suggest = function() {
-  $('#pointhelpModal').foundation('reveal', 'open');
+  $('.leaflet-container').css('cursor','crosshair');
 
   map.once('click', function(e) {
+    $('.leaflet-container').css('cursor','');
     $('#addPointModal').foundation('reveal', 'open');
     $('input[name=lat]').val(e.latlng.lat);
     $('input[name=lon]').val(e.latlng.lng);
