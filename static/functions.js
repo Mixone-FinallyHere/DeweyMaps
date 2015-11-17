@@ -6,6 +6,14 @@ function remove(arr, item) {
   }
 }
 
+var update_selected_cat_form = function() {
+  cat_id = $('select[name=category] > option:selected').val();
+  $('#subcatcheck input').hide()
+  $('#subcatcheck label').hide()
+  $('#subcatcheck input[data-cat=' + cat_id + ']').show()
+  $('#subcatcheck label[data-cat=' + cat_id + ']').show()
+}
+
 var update_points = function() {
   $('.subcat').each(function(i, elem){
     elem = $(elem)
