@@ -81,8 +81,6 @@ $.ajax({
 
 $('#subcatcheck input').hide();
 $('#subcatcheck label').hide();
-$('select[name=category]').change(update_selected_cat_form);
-update_selected_cat_form();
 
 $('#errorsuggest').click(error_suggest);
 
