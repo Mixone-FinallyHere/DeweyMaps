@@ -32,8 +32,8 @@ if(navigator.geolocation) {
 $(document).ready(function () {
   var tooltip = $('a[title]').qtip({
     position:{
-        my: 'left bottom',
-        at: 'top right',
+        my: 'top center',
+        at: 'bottom center',
         corner:{target:'leftMiddle',tooltip:'rightMiddle'}, //instead of corner:{target:'rightMiddle',tooltip:'leftMiddle'},
         adjust:{screen:true, resize:true}
       },
