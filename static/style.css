@@ -41,6 +41,8 @@
 
 .no-margin {
     margin:0px;
+}
+.no-padding{
     padding: 0px !important;
 }
 
@@ -97,4 +99,16 @@
 .item {
   white-space: nowrap;
   display:inline;
+}
+
+.top-drawer {
+    background-color:white;
+    height:2.8em;
+    line-height: 2.8em;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #E7E7E7;
+}
+.blue {
+    color:#008CBA !important;
 }

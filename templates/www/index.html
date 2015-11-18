@@ -24,12 +24,14 @@
         <div class="snap-drawers">
             <div id="snapsDrawer" class="snap-drawer snap-drawer-left small-10 medium-4 large-3">
                 <div>
+                    <div class="top-drawer" data-topbar >
                     <div>"Bruxelles mode d'emploi" est proposé par <a href="http://dewey.be/">Dewey</a></div>
+                    </div>
                     <ul class="accordion no-margin" data-accordion>
                         {% for category in categories %}
                         <li class="accordion-navigation">
                             <a href="#panel{{category.id}}" style="background-color: #{{category.color}}">{{category.name}}</a>
-                            <div id="panel{{category.id}}" class="content no-margin">
+                            <div id="panel{{category.id}}" class="content no-padding">
                                 <div id="subcatvav">
                                     {% for subcategory in category.subcategory_set.all %}
                                     <div class="subcat" data-id="{{subcategory.id}}" show="">
@@ -43,12 +45,11 @@
                     </ul>
                 </div>
                 <div id="">
-                    <a href="#" title="Pour ajouter un point, cliquez simplement sur la carte à l'endroit où vous désirez ajouter le point." data-options="align:top" data-dropdown="errorsuggest-dropdown" id="errorsuggest">
+                    <a href="#" class="blue no-margin button expand secondary" title="Pour ajouter un point, cliquez simplement sur la carte à l'endroit où vous désirez ajouter le point." data-options="align:top" data-dropdown="errorsuggest-dropdown" id="errorsuggest">
                         <i class="fi fi-plus"> </i>
                         Suggérer un point
                     </a>
-                    </br>
-                    <a href="/">
+                    <a class="blue no-margin button expand secondary" href="/">
                         <i class="fi fi-loop"> </i>
                         Réinitialiser
                     </a>
