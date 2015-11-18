@@ -103,12 +103,21 @@
 
 .top-drawer {
     background-color:white;
-    height:2.8em;
-    line-height: 2.8em;
+    height:2.75em;
+    line-height: 2.75em;
     vertical-align: middle;
     text-align: center;
-    background-color: #E7E7E7;
+    background-color: #333;
+    color: white;
+    font-family: "Nimbus Sans L";
+    font-size: 100%;
 }
 .blue {
     color:#008CBA !important;
+}
+.footer {
+    text-align:center;
+    color: #777777;
+    font-style: oblique;
+    font-size:small;
 }

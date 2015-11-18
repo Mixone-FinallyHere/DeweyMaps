@@ -102,6 +102,13 @@ $("#menuButton").click(function(){
         snapper.open('left');
     }
 });
+$("#menuDrawerTop").click(function(){
+    if( snapper.state().state=="left" ){
+        snapper.close();
+    } else {
+        snapper.open('left');
+    }
+});
 $(document).foundation({
     accordion: {
         // specify the class used for accordion panels
