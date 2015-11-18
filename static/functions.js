@@ -14,34 +14,6 @@ var update_selected_cat_form = function() {
   $('#subcatcheck label[data-cat=' + cat_id + ']').show()
 }
 
-var show_cat = function(cat_id) {
-  $('#subcatvav').empty();
-  var category = categories[cat_id];
-  for (var i = 0; i < category.subcategories.length; i++) {
-    subcat = category.subcategories[i];
-    $('#subcatvav').append(
-      '<div data-id="'
-      + subcat.id
-      + '" class="subcat">'
-      + subcat.name
-      + '</div>'
-      )
-
-    $('.subcat[data-id="' + subcat.id + '"]').click(function() {
-      var id = $(this).attr("data-id");
-      if(shown_subcat.indexOf("" + id) >= 0){
-        remove(shown_subcat, id);
-      }
-      else {
-        shown_subcat.push(id);
-      }
-      update_points();
-    });
-  }
-
-  update_points();
-}
-
 var update_points = function() {
   $('.subcat').each(function(i, elem){
     elem = $(elem)
@@ -114,9 +86,10 @@ var submit_form = function() {
 
 
 var error_suggest = function() {
-  $('#pointhelpModal').foundation('reveal', 'open');
+  $('.leaflet-container').css('cursor','crosshair');
 
   map.once('click', function(e) {
+    $('.leaflet-container').css('cursor','');
     $('#addPointModal').foundation('reveal', 'open');
     $('input[name=lat]').val(e.latlng.lat);
     $('input[name=lon]').val(e.latlng.lng);

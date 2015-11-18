@@ -29,7 +29,20 @@ if(navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(displayPos,posError);
 }
 
-
+$(document).ready(function () {
+  var tooltip = $('a[title]').qtip({
+    position:{
+        my: 'top center',
+        at: 'bottom center',
+        corner:{target:'leftMiddle',tooltip:'rightMiddle'}, //instead of corner:{target:'rightMiddle',tooltip:'leftMiddle'},
+        adjust:{screen:true, resize:true}
+      },
+      show: 'click',
+      hide: {
+        event: 'unfocus'
+    },
+});
+});
 
 var json_markers = [];
 var markers_group = new L.FeatureGroup();
@@ -73,3 +86,49 @@ update_selected_cat_form();
 $('#errorsuggest').click(error_suggest);
 
 $('#addpoint').submit(submit_form);
+var width = document.getElementById('snapsDrawer').offsetWidth;
+var snapper = new Snap({
+    element: document.getElementById('content'),
+    disable: 'right',
+    tapToClose: false,
+    maxPosition: width,
+    minPosition: -width,
+});
+snapper.open("left");
+$("#menuButton").click(function(){
+    if( snapper.state().state=="left" ){
+        snapper.close();
+    } else {
+        snapper.open('left');
+    }
+});
+$("#menuDrawerTop").click(function(){
+    if( snapper.state().state=="left" ){
+        snapper.close();
+    } else {
+        snapper.open('left');
+    }
+});
+$(document).foundation({
+    accordion: {
+        // specify the class used for accordion panels
+        content_class: 'content',
+        // specify the class used for active (or open) accordion panels
+        active_class: 'active',
+        // allow multiple accordion panels to be active at the same time
+        multi_expand: true,
+        toggleable: true
+    }
+});
+$('.subcat').each(function(i){
+    $(this).click(function(){
+        var id = $(this).attr("data-id");
+        if(shown_subcat.indexOf("" + id) >= 0){
+            remove(shown_subcat, id);
+        }
+        else {
+            shown_subcat.push(id);
+        }
+        update_points();
+    })
+})
