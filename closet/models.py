@@ -1,9 +1,16 @@
 from django.db import models
+from django.core.validators import RegexValidator
+
+
+ColorValidator = RegexValidator(
+    regex=r'^[A-Fa-f0-9]{6}$',
+    message="Entrez une couleur valide (pas de '#' et 6 caractères)",
+)
 
 
 class Category(models.Model):
     name = models.CharField(blank=False, max_length=255)
-    color = models.CharField(blank=False, max_length=6)
+    color = models.CharField(blank=False, max_length=6, validators=[ColorValidator])
 
     def __str__(self):
         return self.name
