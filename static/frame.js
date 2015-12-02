@@ -2,6 +2,15 @@ var map;
 var data;
 var frame_id = $('body').attr('frame_id');
 
+var add_point = function(point) {
+    L.marker([point.lat, point.lon])
+      .bindPopup(point.popup)
+      .on("click", function(e) {
+        map.panTo(e.latlng);
+      })
+      .addTo(map);
+};
+
 $.ajax({
   url: "/api/iframes/" + frame_id
 }).done(function(response) {
@@ -18,11 +27,13 @@ $.ajax({
 
   for (var i=0; i < data.points.length; i++) {
     var point = data.points[i];
-    L.marker([point.lat, point.lon])
-      .bindPopup(point.popup)
-      .on("click", function(e) {
-        map.panTo(e.latlng);
-      })
-      .addTo(map);
+    add_point(point);
   };
+  for (var i=0; i < data.subcategories.length; i++) {
+    var subcategory = data.subcategories[i];
+    for (var j=0; j < subcategory.marker_set.length; j++) {
+      var point = subcategory.marker_set[j];
+      add_point(point);
+    }
+  }
 });

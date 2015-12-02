@@ -1,11 +1,21 @@
 from iframe.models import Map
 from rest_framework import serializers
 from maps.serializers import MarkerSerializer
+from closet.models import Subcategory
 
 
-class MapSerializer(serializers.HyperlinkedModelSerializer):
+class SubcategorySerializer(serializers.ModelSerializer):
+    marker_set = MarkerSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Subcategory
+        fields = ('name', 'marker_set',)
+
+
+class MapSerializer(serializers.ModelSerializer):
     points = MarkerSerializer(many=True, read_only=True)
+    subcategories = SubcategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Map
-        fields = ('name', 'points', 'center_lat', 'center_lon', 'zoom')
+        fields = ('name', 'points', 'center_lat', 'center_lon', 'zoom', 'subcategories')
