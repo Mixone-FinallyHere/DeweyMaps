@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^addmarker$', 'maps.views.add_marker'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
-    url(r'^frame/(?P<pk>\d+)', iframe.views.FrameView.as_view()),
+    url(r'^frame/', include('iframe.urls'))
 ]
 
 if settings.DEBUG:

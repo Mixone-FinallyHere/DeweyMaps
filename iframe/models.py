@@ -8,6 +8,8 @@ class Map(models.Model):
     center = models.PointField(geography=True, blank=False)
     zoom = models.PositiveIntegerField(validators=[MaxValueValidator(18)])
     points = models.ManyToManyField('maps.Marker')
+    subcategories = models.ManyToManyField('closet.Subcategory')
+
     uuid = UUIDField(auto=True)
 
     @property
