@@ -6,10 +6,16 @@ from iframe.serializers import MapSerializer
 from rest_framework import viewsets
 from iframe.forms import MapForm
 
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 
 class FrameView(DetailView):
     model = Map
     context_object_name = 'map'
+
+    @xframe_options_exempt
+    def get(self, request, *args, **kwargs):
+        return super(DetailView, self).get(request, *args, **kwargs)
 
 
 class IframeViewSet(viewsets.ModelViewSet):
