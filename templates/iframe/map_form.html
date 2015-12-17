@@ -40,7 +40,7 @@
                     <h5 style="background-color: #{{cat.color}}; padding: 0.2em"><i class="fi fi-folder"></i> {{cat.name}}</h5>
                     {% for subcat in cat.subcategory_set.all %}
                         <label style="padding-left: 1.5em">
-                            <input type="checkbox" name="subcat" value="{{subcat.id}}">
+                            <input type="checkbox" name="subcategories" value="{{subcat.id}}">
                             {{subcat.name}}
                         </label>
 

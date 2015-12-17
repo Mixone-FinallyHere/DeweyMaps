@@ -1,10 +1,12 @@
-from django.forms import ModelForm
-from leaflet.forms.widgets import LeafletWidget
-from iframe.models import Map
+from django import forms
+from closet.models import Subcategory
 
 
-class MapForm(ModelForm):
-    class Meta:
-        model = Map
-        fields = ['center', 'zoom', 'subcategories']
-        widgets = {'center': LeafletWidget()}
+class MapForm(forms.Form):
+    latitude = forms.FloatField()
+    longitude = forms.FloatField()
+    zoom = forms.IntegerField()
+    subcategories = forms.ModelMultipleChoiceField(
+        queryset=Subcategory.objects.all(),
+        required=False,
+    )
