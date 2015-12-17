@@ -6,35 +6,45 @@
     <h1>Intérgez DeweyMaps à votre site</h1>
     </div>
 </div>
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="POST">{% csrf_token %}
+        {{ form.non_field_errors }}
         <div class="row">
             <div class="large-12 columns">
                 <h3>Choisissez où centrer la carte</h3>
+                <p>Déplacez la carte et zoomez comme vous voulez</p>
             </div>
             <div class="large-12 columns">
-                <div id="map" style="height: 300px"></div>
+                <div id="map" style="height: 400px"></div>
+                <br>
             </div>
             <div class="large-4 columns">
               <label>Latitude
-                <input type="text" name="latitude" disabled />
+                <input type="text" name="latitude" readonly />
               </label>
             </div>
             <div class="large-4 columns">
               <label>Longitude
-                <input type="text" name="longitude" disabled />
+                <input type="text" name="longitude" readonly />
               </label>
             </div>
             <div class="large-4 columns">
               <label>Zoom
-                <input type="text" name="zoom" disabled />
+                <input type="text" name="zoom" readonly />
               </label>
             </div>
             <div class="large-12 columns">
-                <h3>Choisissez les catégories à afficher</h3>
+                <h3>Choisissez les catégories de points à afficher</h3>
             </div>
-            {% for cat in Category.objects.all %}
-                <div class="large-12 columns">
-                    <h5>{{cat.name}}</h5>
+            {% for cat in categories %}
+                <div class="large-4 columns">
+                    <h5 style="background-color: #{{cat.color}}; padding: 0.2em"><i class="fi fi-folder"></i> {{cat.name}}</h5>
+                    {% for subcat in cat.subcategory_set.all %}
+                        <label style="padding-left: 1.5em">
+                            <input type="checkbox" name="subcat" value="{{subcat.id}}">
+                            {{subcat.name}}
+                        </label>
+
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
