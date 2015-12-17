@@ -1,9 +1,81 @@
 {% extends "iframe/base.html" %}
 
 {% block "content" %}
+<div class="row">
+    <div class="large-12 columns">
+    <h1>Intérgez DeweyMaps à votre site</h1>
+    </div>
+</div>
     <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create" class="button"/>
+        <div class="row">
+            <div class="large-12 columns">
+                <h3>Choisissez où centrer la carte</h3>
+            </div>
+            <div class="large-12 columns">
+                <div id="map" style="height: 300px"></div>
+            </div>
+            <div class="large-4 columns">
+              <label>Latitude
+                <input type="text" name="latitude" disabled />
+              </label>
+            </div>
+            <div class="large-4 columns">
+              <label>Longitude
+                <input type="text" name="longitude" disabled />
+              </label>
+            </div>
+            <div class="large-4 columns">
+              <label>Zoom
+                <input type="text" name="zoom" disabled />
+              </label>
+            </div>
+            <div class="large-12 columns">
+                <h3>Choisissez les catégories à afficher</h3>
+            </div>
+            {% for cat in Category.objects.all %}
+                <div class="large-12 columns">
+                    <h5>{{cat.name}}</h5>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <input type="submit" value="Créer ma carte" class="button"/>
+            </div>
+        </div>
     </form>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+var map = L.map('map').setView([50.84, 4.36], 12);
+
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'c4ptaincrunch.ka5engdh',
+    accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
+}).addTo(map);
+
+var update = function(){
+    pos = map.getCenter();
+    $("input[name='latitude']").val(pos.lat);
+    $("input[name='longitude']").val(pos.lng);
+    $("input[name='zoom']").val(map.getZoom());
+};
+
+$( document ).ready(function() {
+    update();
+});
+
+map.on('zoomend', function(e) {
+    update();
+});
+
+map.on('dragend', function(e) {
+    update();
+});
+</script>
 {% endblock %}
