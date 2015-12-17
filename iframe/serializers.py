@@ -18,4 +18,4 @@ class MapSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Map
-        fields = ('name', 'points', 'center_lat', 'center_lon', 'zoom', 'subcategories')
+        fields = ('points', 'center_lat', 'center_lon', 'zoom', 'subcategories')
