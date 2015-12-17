@@ -25,10 +25,6 @@ $.ajax({
     accessToken: 'pk.eyJ1IjoiYzRwdGFpbmNydW5jaCIsImEiOiJUdWVRSENNIn0.qssi5TBLeBinBsXkZKiI6Q'
   }).addTo(map);
 
-  for (var i=0; i < data.points.length; i++) {
-    var point = data.points[i];
-    add_point(point);
-  };
   for (var i=0; i < data.subcategories.length; i++) {
     var subcategory = data.subcategories[i];
     for (var j=0; j < subcategory.marker_set.length; j++) {
